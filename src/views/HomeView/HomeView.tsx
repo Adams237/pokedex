@@ -13,6 +13,8 @@ import { Pokemon } from '../../model/Pokemon';
 import { addPokemon } from '../../store/redurcer/pokemonSlice';
 import { shuffleArray } from '../../utils/math';
 
+import auth from '@react-native-firebase/auth';
+
 
 
 const HomeView = (props: any) => {
@@ -24,13 +26,26 @@ const HomeView = (props: any) => {
     const [listPokemon, setListpokemon] = useState<Pokemon[]>(undefined);
     const [isData, setIsData] = useState(false);
     const [arrayPokemonCapture, setArrayCapturePokemon] = useState<Pokemon[]>([]);
-    const pokemonCapture = useSelector((state:any)=>state.pokemonCapdured.value);
+    const [userid, setUserId] = useState<String>('');
+    const pokemonCapture = useSelector((state: any) => state.pokemonCapdured.value);
     const dispatch = useDispatch();
-    const capturePokemon = ()=>{
+  
+    const onSingOut = ()=>{
+        auth()
+        .signOut()
+        .then(()=>{
+            props.navigation.navigate('Login');
+        });
+    };
+    useEffect(()=>{
+        setUserId(auth().currentUser?.uid);
+    },[]);
+    
+    const capturePokemon = () => {
         const currentPokemon = listPokemon[counterPokedex];
-        
+
         dispatch(addPokemon(currentPokemon));
-        
+
     };
     const onNext = () => {
         if (counterPokedex === listPokemon.length - 1) {
@@ -41,7 +56,7 @@ const HomeView = (props: any) => {
         }
     };
     // console.log(listPokemon);
-    
+
     const onPrevious = () => {
         if (counterPokedex === 0) {
             setCounterPokedex(listPokemon.length - 1);
@@ -53,12 +68,12 @@ const HomeView = (props: any) => {
 
 
 
-    const onViewpokemon = (idpokemon:string, namePokemon: string, imagePokemon:string) =>{
-        props.navigation.navigate('Detailpokemon',{
+    const onViewpokemon = (idpokemon: string, namePokemon: string, imagePokemon: string) => {
+        props.navigation.navigate('Detailpokemon', {
             id: idpokemon,
             name: namePokemon,
             src: imagePokemon,
-            isReleasePosible:false
+            isReleasePosible: false
         });
     };
 
@@ -94,6 +109,8 @@ const HomeView = (props: any) => {
         <View style={styles.main_container}>
             <View style={styles.title_container}>
                 <Text style={styles.text_title}> Pokedex App </Text>
+                <Text onPress={onSingOut}> Sign out </Text>
+                <Text> UserId : {userid} </Text>
             </View>
             {isData ?
                 <View style={styles.pokemon_container}>
@@ -125,7 +142,7 @@ const HomeView = (props: any) => {
 
 
 
-const PokemonInfo = ({id, name, level, isMal, src, onClickPokemon }: Pokemon) => {
+const PokemonInfo = ({ id, name, level, isMal, src, onClickPokemon }: Pokemon) => {
     return (
         <>
             <Text>this is a pokemon</Text>

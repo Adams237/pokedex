@@ -21,6 +21,8 @@ import HomeView from './views/HomeView/HomeView';
 import TestView from './views/TestView/TestView';
 import PokemonDetails from './views/PokemonDetails/PokemonDetails';
 import MypokemonView from './views/MyPokemonView/MypokemonView';
+import LoginView from './views/LoginView/LoginView';
+import SingupView from './views/SingupView/SingupView';
 
 
 
@@ -38,6 +40,8 @@ const App = () => {
     );
   }
 
+
+
   const MyPokemonStack = createNativeStackNavigator();
 
   // eslint-disable-next-line react/no-unstable-nested-components
@@ -52,12 +56,25 @@ const App = () => {
 
   const Tab = createBottomTabNavigator();
 
+  function TabNavigation() {
+    return (<Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Screen name="MyPokemon" component={MyPokemonStackScreen} />
+    </Tab.Navigator>)
+  };
+
+  const MainsStac = createNativeStackNavigator();
+  const MaisStackNavigation = ()=>(
+    <MainsStac.Navigator initialRouteName={'Login'}>
+      <MainsStac.Screen name="Home" component={ TabNavigation } options={{ headerShown:false }}/>
+      <MainsStac.Screen name="Login" component={LoginView} options={{ headerShown:false }}/>
+      <MainsStac.Screen name="Singup" component={ SingupView } options={{ headerShown:false }}/>
+    </MainsStac.Navigator>
+  ) 
+
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="MyPokemon" component={MyPokemonStackScreen} />
-      </Tab.Navigator>
+      <MaisStackNavigation/>
     </NavigationContainer>
   );
 };
