@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, Image, StyleSheet, Button } from 'react-native';
-import { Card } from '@rneui/themed'
+import { Card } from '@rneui/themed';
 import { useDispatch } from 'react-redux';
 import { removePokemon } from '../../store/redurcer/pokemonSlice';
 

@@ -1,12 +1,16 @@
 import React,{useEffect, useState} from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import { useDispatch } from 'react-redux';
+import { authentification } from '../../store/redurcer/userSlice';
 
 
 const LoginView = (props:any) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+ 
 
 
   useEffect(()=>{
@@ -16,6 +20,7 @@ const LoginView = (props:any) => {
   const _isUserAuth = ()=>{
     if(auth().currentUser){
         console.log('userId :', auth().currentUser?.uid);
+        dispatch(authentification({userId:auth().currentUser?.uid}))
         props.navigation.navigate('Home');
     }
   };
@@ -26,6 +31,9 @@ const LoginView = (props:any) => {
     .then((response: any)=>{
      const userid = response.user.uid;
      console.log('user login', userid);
+     dispatch(authentification({ email, userId:response.user.uid }));
+     setEmail('');
+     setPassword('');
       props.navigation.navigate('Home');
     })
     .catch(error=>{

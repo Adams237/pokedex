@@ -23,6 +23,9 @@ import PokemonDetails from './views/PokemonDetails/PokemonDetails';
 import MypokemonView from './views/MyPokemonView/MypokemonView';
 import LoginView from './views/LoginView/LoginView';
 import SingupView from './views/SingupView/SingupView';
+import Profile from './views/Profile/Profile';
+import  Icon  from 'react-native-vector-icons/FontAwesome';
+import PresentationView from './views/Preasentation/PresentationView';
 
 
 
@@ -34,8 +37,20 @@ const App = () => {
   function HomeStackScreen() {
     return (
       <HomeStack.Navigator>
-        <HomeStack.Screen name="Home2" component={HomeView} options={{ title: '', headerShown: false }} />
+        <HomeStack.Screen name="Home2" component={HomeView} 
+        options={(props)=>({
+          unmountInactiveRoute:true,
+          title:'',
+          headerStyle: {
+            backgroundColor:'#fff'
+          },
+          headerLeft: ()=>(
+            <Icon style={{ marginLeft: 15 }} name="user-circle" size={30} color={"black"} onPress={()=>{props.navigation.navigate('Profile')}}/>
+          )
+        })}
+        />
         <HomeStack.Screen name="Detailpokemon" component={PokemonDetails} options={{ title: 'details' }} />
+        <HomeStack.Screen name="Profile" component={Profile} options={{ title: 'MyProflie' }} />
       </HomeStack.Navigator>
     );
   }
@@ -60,6 +75,7 @@ const App = () => {
     return (<Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="MyPokemon" component={MyPokemonStackScreen} />
+      <Tab.Screen name="Presentation" component={PresentationView}/>
     </Tab.Navigator>)
   };
 

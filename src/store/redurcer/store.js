@@ -1,10 +1,12 @@
 import { configureStore, getDefaultMiddleware, combineReducers } from "@reduxjs/toolkit";
 import pokemonSlice from "./pokemonSlice";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import userSlice from "./userSlice";
 
 const rootReduer = combineReducers({
-    pokemonCapdured: pokemonSlice
+    pokemonCapdured: pokemonSlice,
+    currentUser: userSlice,
 });
 const persistConfig = {
     key:'root',
@@ -20,4 +22,4 @@ export const store = configureStore({
         }
     })
 });
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
