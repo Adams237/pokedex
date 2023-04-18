@@ -26,6 +26,8 @@ import SingupView from './views/SingupView/SingupView';
 import Profile from './views/Profile/Profile';
 import  Icon  from 'react-native-vector-icons/FontAwesome';
 import PresentationView from './views/Preasentation/PresentationView';
+import TrainerList from './views/TrainerList/TrainerList';
+import TrainerDetails from './views/TrainerList/TrainerDetails';
 
 
 
@@ -63,9 +65,20 @@ const App = () => {
   function MyPokemonStackScreen() {
     return (
       <MyPokemonStack.Navigator>
-        <MyPokemonStack.Screen name="My pokemon list" component={MypokemonView} options={{ title: 'this is my team pokemons' }} />
+        <MyPokemonStack.Screen name="My pokemon list" component={MypokemonView} options={{ title: 'this is my team pokemons', headerLeft: ()=>null }} />
         <MyPokemonStack.Screen name="Detailpokemon" component={PokemonDetails} options={{ title: 'Characteristics of the Pokemon' }} />
       </MyPokemonStack.Navigator>
+    );
+  }
+  const TrainerStack = createNativeStackNavigator();
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  function TrainerStackScreen() {
+    return (
+      <TrainerStack.Navigator>
+        <TrainerStack.Screen name="TrainerList" component={TrainerList} options={{ title: 'autre Dresseur', headerLeft: ()=>null }} />
+        <TrainerStack.Screen name="DetailTrainer" component={TrainerDetails} options={{ title: 'Characteristics of the Pokemon' }} />
+      </TrainerStack.Navigator>
     );
   }
 
@@ -76,6 +89,8 @@ const App = () => {
       <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="MyPokemon" component={MyPokemonStackScreen} />
       <Tab.Screen name="Presentation" component={PresentationView}/>
+      <Tab.Screen name="profil" component={Profile}/>
+      <Tab.Screen name="TrainerList" component={TrainerStackScreen}/>
     </Tab.Navigator>)
   };
 

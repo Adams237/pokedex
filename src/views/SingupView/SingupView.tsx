@@ -1,18 +1,22 @@
 import React,{useState} from 'react';
 import { View, StyleSheet, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import { useDispatch } from 'react-redux';
+import { authentification } from '../../store/redurcer/userSlice';
 
 const SingupView = (props:any) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const onSingupPress = ()=>{
     auth()
     .createUserWithEmailAndPassword(email,password)
     .then(()=>{
       console.log('utilisateur créer');
-      props.navigation.navigate('Home')
+      dispatch(authentification({userId:auth().currentUser?.uid}));
+      props.navigation.navigate('Home');
     })
     .catch(error=>{
       if(error.code ==='auth/email-already-in-use'){

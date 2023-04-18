@@ -48,10 +48,8 @@ const PresentationView = (props:any) => {
                 <Form onButtonPress={handleSubmit} buttonText='Next' buttonStyle={{ backgroundColor:'green' }}>
                     <FormItem
                         label='name'
-                        isRequired
                         value={values.name}
                         onChangeText={(name) => setValue({ ...values, name })}
-                        asterik
                         placeholder='entrer votre nom'
                     />
                     <FormItem
@@ -63,9 +61,7 @@ const PresentationView = (props:any) => {
                     <FormItem
                         label='age'
                         value={values.age}
-                        isRequired
                         onChangeText={(age) => setValue({ ...values, age })}
-                        asterik
                         placeholder='entrer votre age'
                     />
                 </Form>
